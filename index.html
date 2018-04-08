@@ -14,6 +14,10 @@
     <header></header>
 
     <main>
+        <div id="startScreen">
+            <input type="button" id="startPVP" value="2 játékos">
+            <input type="button" id="startPVE" value="Gép ellen">
+        </div>
         <div id="playArea">
             <table>
                 <tr>
@@ -41,6 +45,15 @@
                     <td id="playerO">O</td>
                 </tr>
             </table>
+
+            <input type="button" id="undo" value="Visszalépés" style="visibility: hidden;"/>
+            <p id="undoTimer" style="visibility: hidden;"></p>
+            <p id="moves" style="visibility: hidden;"></p>
+
+            <div id="results">
+                <p id="resultText"></p>
+                <input type="button" id="newGame" value="Új játék"/>
+            </div>
         </div>
     </main>
 

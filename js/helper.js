@@ -8,7 +8,6 @@ function $$(element){
 }
 
 function addEventHandler(elem, tipus, kezelo) {
-    console.log("almafa");
     //Szabványos módszer
     if (elem.addEventListener) {
         elem.addEventListener(tipus, kezelo, false);
@@ -23,4 +22,8 @@ function addEventHandler(elem, tipus, kezelo) {
     else {
         elem['on' + tipus] = kezelo;
     }
+}
+
+function removeEventHandler(elem, tipus, kezelo) {
+    elem.removeEventListener(tipus, kezelo);
 }
