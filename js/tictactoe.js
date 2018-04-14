@@ -74,6 +74,10 @@ function gameEnd(end) {
     }
     $('#results').style.visibility = 'visible';
     removeEventHandler($('#playArea'), 'pointerdown', makeMove);
+
+    // Ha megjelent volna játék közben, akkor elrejtük ezeket
+    $('#undo').style.visibility = 'hidden';  // elrejtjük a visszalépés gombot
+    $('#undoTimer').style.visibility = 'hidden';  // elrejtjük a visszaszámlálást
 }
 
 function createPic(src, alt){
@@ -89,6 +93,10 @@ function undoLastMove(e) {
     $('#' + moves[moves.length-1]).style.color = '#dddddd';  // visszaállítjuk az eredeti színt a mezőre
     $('#undo').style.visibility = 'hidden';  // elrejtjük a visszalépés gombot
     $('#undoTimer').style.visibility = 'hidden';  // elrejtjük a visszaszámlálást
+    // eltüntetjük az összes mező kiemelést
+    for(i=1; i<=9; i++){
+        $('#m' + i).style = 'background-color: #444444';
+    }
 
     // mivel a gép lépte az utolsót, ezért kétszer kell visszalépni
     $('#' + moves[moves.length-1]).innerHTML = '';
