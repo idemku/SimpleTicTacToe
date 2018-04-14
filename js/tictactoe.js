@@ -2,15 +2,17 @@ addEventHandler(window, 'load', function (e) {
     $('#playerX').style = 'background-color: #888888';
     addEventHandler($('#playArea'), 'pointerdown', makeMove);
     addEventHandler($('#newGame'), 'pointerdown', function (e) { location.reload(); });
+    addEventHandler($('#newGame2'), 'pointerdown', function (e) { location.reload(); });
     addEventHandler($('#undo'), 'pointerdown', undoLastMove);
     addEventHandler($('#startPVP'), 'pointerdown', startPVP);
     addEventHandler($('#startPVE'), 'pointerdown', startPVE);
-
+    addEventHandler($('#startDemo'), 'pointerdown', startDemo);
 });  
 
 var player = 0; // 0-X, 1-O
 var moves = [];
 var isPVE = false;
+var isDemo = false;
 var undoTimer;
 
 function changePlayer() {
@@ -55,11 +57,21 @@ function makeMove(e) {
 function gameEnd(end) {
     if(end !== 'D') {
         $('#resultText').innerHTML = 'Nyert: ' + end;
+        $('#results').appendChild(createPic('img/happy.jpg', 'Egy mosolygó smiley'));
     }else{
         $('#resultText').innerHTML = 'Döntetlen';
+        $('#results').appendChild(createPic('img/dontetlen.jpg', 'Egy kép egy Minionról'));
     }
     $('#results').style.visibility = 'visible';
     removeEventHandler($('#playArea'), 'pointerdown', makeMove);
+}
+
+function createPic(src, alt){
+    var img = document.createElement("img");
+    img.setAttribute("src", src);
+    img.setAttribute("alt", alt);
+    img.setAttribute("width", "100%");
+    return img;
 }
 
 function undoLastMove(e) {
@@ -85,6 +97,9 @@ function isEnd() {
             $('#m' + i).innerHTML === $('#m' + (i+1)).innerHTML &&
             $('#m' + i).innerHTML === $('#m' + (i+2)).innerHTML){
 
+            $('#m' + i).style = 'background-color: #888888';
+            $('#m' + (i+1)).style = 'background-color: #888888';
+            $('#m' + (i+2)).style = 'background-color: #888888';
             return $('#m' + i).innerHTML;
         }
     }
@@ -95,6 +110,9 @@ function isEnd() {
             $('#m' + i).innerHTML === $('#m' + (i+3)).innerHTML &&
             $('#m' + i).innerHTML === $('#m' + (i+6)).innerHTML){
 
+            $('#m' + i).style = 'background-color: #888888';
+            $('#m' + (i+3)).style = 'background-color: #888888';
+            $('#m' + (i+6)).style = 'background-color: #888888';
             return $('#m' + i).innerHTML;
         }
     }
@@ -104,12 +122,18 @@ function isEnd() {
         $('#m1').innerHTML === $('#m5').innerHTML &&
         $('#m1').innerHTML === $('#m9').innerHTML){
 
+        $('#m1').style = 'background-color: #888888';
+        $('#m5').style = 'background-color: #888888';
+        $('#m9').style = 'background-color: #888888';
         return $('#m1').innerHTML;
     }
     if($('#m3').innerHTML !== '' &&
         $('#m3').innerHTML === $('#m5').innerHTML &&
         $('#m3').innerHTML === $('#m7').innerHTML){
 
+        $('#m3').style = 'background-color: #888888';
+        $('#m5').style = 'background-color: #888888';
+        $('#m7').style = 'background-color: #888888';
         return $('#m3').innerHTML;
     }
 
@@ -136,6 +160,12 @@ function startPVE(e) {
     isPVE = true;
 }
 
+function startDemo(e) {
+    $('#startScreen').style.visibility = 'hidden';
+    isPVE = true;
+    isDemo = true;
+}
+
 function makeAIMove() {
     var num = 0;
     do {
@@ -153,7 +183,7 @@ function makeAIMove() {
     $('#moves').innerHTML = moves;
 
     var end = isEnd();
-    if(end !== -1){
+    if(end !== -1 && isDemo){
         $('#m' + num).style.color = '#ff5555';
         $('#undo').style.visibility = 'visible';
         $('#undoTimer').style.visibility = 'visible';
@@ -167,5 +197,8 @@ function makeAIMove() {
                 gameEnd(end);
             }
         }, 1000);
+    }
+    else if(end !== -1 && !isDemo){
+        gameEnd(end);
     }
 }
