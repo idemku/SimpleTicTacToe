@@ -15,6 +15,16 @@ var isPVE = false;
 var isDemo = false;
 var undoTimer;
 
+var svgX = '<svg height="30" width="30">' +
+    '<line x1="0" y1="0" x2="30" y2="30" style="stroke:rgb(200,200,200);stroke-width:5" />\n' +
+    '<line x1="0" y1="30" x2="30" y2="0" style="stroke:rgb(200,200,200);stroke-width:5" />\n' +
+    'Sajnos ez a böngésző nem támogatja az SVG-t.\n' +
+    '</svg>';
+var svgO = '<svg height="30" width="30">\n' +
+    '<circle cx="15" cy="15" r="12" stroke="rgb(200,200,200)" stroke-width="5" fill="none"/>\n' +
+    'Sajnos ez a böngésző nem támogatja az SVG-t.\n' +
+    '</svg>';
+
 function changePlayer() {
     if(player === 1) {
         player = 0;
@@ -37,9 +47,9 @@ function makeMove(e) {
     }
 
     if(player === 0){
-        e.target.innerHTML = 'X';
+        e.target.innerHTML = svgX;
     }else{
-        e.target.innerHTML = 'O';
+        e.target.innerHTML = svgO;
     }
     changePlayer();
 
@@ -173,9 +183,9 @@ function makeAIMove() {
     }while($('#m' + num).innerHTML !== '');
 
     if(player === 0){
-        $('#m' + num).innerHTML = 'X';
+        $('#m' + num).innerHTML = svgX;
     }else{
-        $('#m' + num).innerHTML = 'O';
+        $('#m' + num).innerHTML = svgO;
     }
     changePlayer()
 
